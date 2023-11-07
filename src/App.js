@@ -1,103 +1,48 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import Input from "./components/Input";
+import TodoList from "./components/TodoList";
+import uuid from "react-uuid";
 
-function App() {
-  return (
-    <>
-    <Header />
-    </>
-  );
-}
-function Header() {
-  return (
-    <>
-      <header
-        style={{
-          backgroundColor: "green",
-          padding: "10px",
-        }}
-      >
-        <p>todo list</p>
-      </header>
-      <Input />
-    </>
-  );
-}
+import "./App.css";
 
-function Input() {
+export default function App() {
   const initialState = [
     {
-      id: 1,
-      title: "",
-      contents: "",
+      id: uuid(),
+      title: "todo",
       isDone: false,
-    }, {
-      id: 2,
-      title: "",
-      contents: "",
-      isDone: false
-    }
+    },
+    {
+      id: uuid(),
+      title: "todo",
+      isDone: false,
+    },
+    {
+      id: uuid(),
+      title: "todo",
+      isDone: true,
+    },
   ];
 
   const [todos, setTodos] = useState(initialState);
-  
-  const [title, setTitle] = useState('');
-
-  function onChangeTitle (event) {
-    setTitle(event.target.value);
-  }
-
-  const [content, setContent] = useState('');
-
-  function onChangeContents (event) {
-    setContent(event.target.value);
-  }
- function clickBtnHandler(event){
-  event.preventDefault();
- 
- }
 
   return (
-    <>
-      <div
-        style={{
-          backgroundColor: "pink",
-          padding: "10px",
-        }}
-      > 
-        <input type="text" onChange={onChangeTitle} value={title} placeholder="제목"/>
-        <input type="text" onChange={onChangeContents} value={content} placeholder="내용" />
-        <button onClick={() => clickBtnHandler}>추가</button>
-      </div>
-      <Main todos = {todos} title={title} content={content} />
-    </>
+    <div className="container">
+
+      <header>
+        <h1>Todo List</h1>
+      </header>
+
+     <main>
+     <Input todos={todos} setTodos={setTodos} />
+     <TodoList todos={todos} setTodos={setTodos} listIsDone={false}/>
+     <TodoList todos={todos} setTodos={setTodos} listIsDone={true}/>
+     </main>
+
+      <footer>
+        <p>@Made by im2hw</p>
+      </footer>
+
+    </div>
   );
 }
-function Main({todos}) { 
-
-  return (
-    <>
-      <div
-        style={{
-          backgroundColor: "orange",
-          padding: "10px",
-        }}
-      >
-        메인
-        {todos.map(function(todo){
-            return (
-             <div>
-               <h3>{todo.title}</h3>
-               <h3>{todo.contents}</h3>
-               <h3>{todo.isDone}</h3>
-             </div>
-            )
-           })
-        }
-        
-      </div>
-    </>
-  );
-}
-
-export default App;
